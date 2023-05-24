@@ -1,0 +1,157 @@
+package imcArray;
+
+import javax.swing.JOptionPane;
+
+public class Procesos {
+	String nombre[];
+	int id[];
+	int celular[];
+	Double peso[];
+	Double altura[];
+	Double resultado[];
+	Double IMC;
+	String estado = "";
+	String mensaje = "";
+		
+	
+	public void inicio() {
+		System.out.println("Inicio");
+		String menu="calcular imc\n";
+		menu+="1. agregar personas\n";
+		menu+="2. buscar resultados individuales\n";
+		menu+="3. imprimir datos\n";
+		menu+="4. Salir\n";
+		
+		int opcion = 0;
+		do {
+			opcion= Integer.parseInt(JOptionPane.showInputDialog(menu));
+			validacionmenu(opcion);
+		} while (opcion!=4);
+	}
+	
+	
+	
+	public void validacionmenu(int opcion) {
+		switch (opcion) {
+		case 1: 
+			pedirdatos();
+		break;
+			
+		case 2:
+			if (id!=null) {
+				Mensaje();	
+			}else {
+				System.out.println("debe primero llenar datos");
+			}
+		break;
+			
+		case 3:
+			if (validarArreglo()) {
+				Imprimirdatos();	
+			}
+		break;
+			
+	
+		case 4: 
+			System.out.println("chao con adios");
+			
+		break; 
+			
+		default:
+			System.out.println("ingrese una opcion valida");
+		}
+	}
+
+
+
+
+
+	public boolean validarArreglo() {
+		if (nombre!=null) {
+			return true;
+		}else {
+			System.out.println("Debe primero llenar datos");
+			return false;
+		}
+	}
+	
+	
+	private void Imprimirdatos() {
+		System.out.println("Impresion de datos");
+		for (int i = 0; i < nombre.length; i++) {
+			System.out.println("nombre: "+nombre[i]+" Documento: "+id[i]+" celular: "+celular[i]+" resultado: "+resultado[i]);
+		}
+		
+	}
+	
+	private void Mensaje() {
+		int documentobuscar = Integer.parseInt(JOptionPane.showInputDialog("ingrese su documento"));
+		int contador=0;
+		
+		for (int i = 0; i < id.length; i++) {
+			if(IMC<18) {
+				estado = "anorexia";
+			}else if(IMC>=18 && IMC<20) {
+				estado = "delgadez";
+			}else if(IMC>=20 && IMC<27) {
+				estado = "normalidad";
+			}else if(IMC>=27 && IMC<30) {
+				estado = "obesidad grado 1";
+			}else if(IMC>=30 && IMC<35) {
+				estado = "obesidad grado 2";
+			}else if(IMC>=35 && IMC<40) {
+				estado = "obesidad grado 3";
+			}else if(IMC>=40) {
+				estado = "obesidad morbida";
+			}
+			if (id[i]==documentobuscar) {
+				mensaje="Señor(a) "+nombre[i]+", identificado con el documento "+id[i]+"\n";
+				mensaje+="con el celular "+celular[i]+". El resultado de su IMC fue "+resultado[i]+"\n";
+				mensaje+="el cual dice que usted padece "+estado;
+				System.out.println(mensaje);
+				contador++;
+			}
+		}
+		
+		if (contador==0) {
+			System.out.println("La persona a buscar no ha sido encontrada");
+			
+		}
+	}
+
+
+	
+
+	public void pedirdatos() {
+		
+		System.out.println("llenar datos");
+		int tam=Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de Personas"));
+		id=new int[tam];
+		nombre=new String[tam];
+		celular=new int[tam];
+		peso=new Double[tam];
+		altura=new Double[tam];
+		resultado=new Double[tam];
+		
+		for (int i = 0; i < id.length; i++) {
+			id[i]=Integer.parseInt(JOptionPane.showInputDialog("ingrese el documento "+(i+1)));
+			nombre[i]=JOptionPane.showInputDialog("Ingrese el nombre "+(i+1));
+			celular[i]=Integer.parseInt(JOptionPane.showInputDialog("ingrese el celular"+(i+1)));
+			peso[i]=Double.parseDouble(JOptionPane.showInputDialog("ingrese el peso "+(i+1)));
+			altura[i]=Double.parseDouble(JOptionPane.showInputDialog("ingrese la altura "+(i+1)));
+			
+			
+			IMC=peso[i]/(altura[i]*altura[i]);
+			
+			resultado[i]=IMC;
+			
+		}
+		
+	}
+	
+}
+	
+	
+
+
+
